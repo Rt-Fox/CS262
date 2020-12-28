@@ -1,0 +1,97 @@
+#зачем создавать велосипед
+class CustomFile < File
+    def initialize(filename)
+        super(filename)
+    end
+    #Метод, превращающий путь к файлу в его абсолютный путь
+    def absolute_path(file_name)
+
+        return super.absolute_path(file_name)
+
+        #File.absolute_path("file_name")       #=> "<relative_path>/~oracle/bin"
+    end
+
+    #Метод проверяющий, является ли данный файл каталогом (принимает имя файла)
+    def directory?(file_name)
+
+        return super.directory?(file_name)
+
+        #File.directory?(file_name)  =>  true or false
+    end
+
+    #Метод проверяющий существование файла (принимает имя файла)
+    def exist?(file_name)
+
+        return super.exist?(file_name)
+
+       #File.exist?(file_name)    =>  true or false
+    end
+
+    #Метод возвращающий время модификации файла (принимает имя файла)
+    def mtime(file_name)
+
+        return super.mtime(file_name)
+
+        #File.atime(file_name)   #=> Wed Apr 09 08:51:48 CDT 2003
+    end
+end
+
+class CustomHash < Hash
+    def initialize
+        super
+    end
+    #Метод, принимающий блок и удаляющий пару, если условие внутри блока вычисляется в true
+    def delete_if(block)
+
+        return self.delete_if{| key, value | block }
+
+        #h.delete_if {|key, value| key >= "b" }   #=> {"a"=>100}
+    end
+
+    #Метод, проверяющий пуст ли хэш
+    def empty?()
+
+        return self.empty?()
+
+        #{}.empty?   #=> true
+    end
+end
+
+class CustomSymbol < Symbol
+
+    def initialize
+        super
+    end
+    #Метод, возвращающий массив всех определённых символов в памяти на данный момент
+    def all_symbols
+        return super.all_symbols
+        #Symbol.all_symbols    => array
+    end
+
+    #Метод, проверяющий находится ли зданное имя символа между двумя другими заданными именамисимволов.
+    #Между – имеется в виду проверка по кодам ASCII для символов из которых состоит объект класса Symbol
+
+    def between?(min, val, max)
+        # Проверяет находится ли символ val в промежутке между заданными min и max
+        return (min <= val and val <= max)
+    end
+end
+
+class CustomTime < Time
+    def initialize
+        super
+    end
+
+    def now()
+        return super.now()
+    end
+
+    def friday?()
+        return Time.now().wday == 5
+    end
+
+    def zone()
+        return Time.now().zone
+        # time.zone => string
+    end
+end
