@@ -1,0 +1,76 @@
+class User
+     def initialize(surname, name, patronymic, phone, country=nil,birthday=nil, organization=nil, posit=nil)
+
+        @surname = surname
+        @name = name
+        @patronymic = patronymic
+        @phone = phone
+        if !country.nil?
+            @country = country
+        end
+        if !organization.nil?
+            @organization = organization
+        end
+        if !posit.nil?
+            @posit = posit
+        end
+
+        is_valid = validate()
+        if is_valid
+          db = DBFetcher.new()
+          db.сonnect()
+        else
+          raise Exception.new "Неправильно введенные данные"
+        end
+    end
+
+    def validate()
+        validator = Validator.new()
+
+        count = []
+        count.append(validator.nonumber(@surname))
+        count.append(validator.nonumber(@name))
+        count.append(validator.nonumber(@patronymic))
+        count.append(validator.number(@phone))
+        count.append(validator.country(@country))
+        count.append(validator.number(@birthday))
+        count.append(validator.nonumber(@iorganization))
+        count.append(validator.nonumber(@posit))
+
+        return !(count.include? false)
+      end
+
+end
+
+class Validator
+  def zero(name)
+    return name=nil
+  end
+  def nonumber(name)
+    return name.count("0-9") == 0
+  end
+
+  def number(number)
+    return number.count("a-zA-Z") == 0
+  end
+  def country(country)
+    return country.nil? || Countries.new().includ(country)
+  end
+end
+class Countries
+  @COUNTRIES = ['Russia']
+
+  def includ(country)
+    return @COUNTRIES.include?(country)
+  end
+end
+
+class DBFetch
+    def connect()
+        puts "Успешное подключение к базе"
+    end
+
+    def fetch(query)
+        return true
+    end
+end
